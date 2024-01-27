@@ -40,6 +40,7 @@
 <script>
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
+import AuthenticationService from '../services/AuthenticationService'
 
 export default {
     setup() {
@@ -56,14 +57,21 @@ export default {
             screens,
             facilities,
 
-            onSubmit() {
+            async onSubmit() {
                 const new_cinema = {
                     name: name.value,
                     address: address.value,
                     screens: screens.value,
                     facilities: facilities.value,
                 }
-                console.log(new_cinema);
+
+                const response = await AuthenticationService.register({
+                    name: name.value,
+                    address: address.value,
+                    screens: screens.value,
+                    facilities: facilities.value,
+                })
+                console.log(response.data);
                 $q.notify({
                     color: 'green-5',
                     textColor: 'white',
